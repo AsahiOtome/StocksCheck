@@ -19,12 +19,17 @@ def parse_json(string: str) -> dict:
     return json.loads(string[begin:end])
 
 
+"""
+json_loads()所转化的字典必须是严格按照'单括号包裹双括号", eg. '{"demo": "asahi"}'
+"""
+
+
 def get_random_users() -> str:
     """
     生成随机的用户代理
     :return:
     """
-    return random.choice(json.loads(global_config.get('connect_config', 'user_agents')))
+    return random.choice(json.loads(global_config.get('connect_config', 'user_agents').replace('\n', '')))
 
 
 def wait_some_time():
