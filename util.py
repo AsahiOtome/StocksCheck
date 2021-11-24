@@ -18,12 +18,18 @@ def parse_json(string: str) -> dict:
     return json.loads(string[begin:end])
 
 
+"""
+json.loads()对字符串的读取必须严格按照单引号'包裹双引号"的形式。eg. '{"name": "Demo"}'
+"""
+
+
 def get_random_users() -> str:
     """
     生成随机的用户代理
     :return:
     """
-    return random.choice(json.loads(global_config.get('connect_config', 'user_agents')))
+    user_agents = list(json.loads(global_config.get('connect_config', 'user_agents').replace('\n', '')).values())
+    return random.choice(user_agents)
 
 
 def wait_some_time():
@@ -33,6 +39,7 @@ def wait_some_time():
 """
 session.headers 将会添加一个预先的header字典，在get时自动应用。在get(headers=headers)时会将两个headers整合到一起，
 如果存在重复的key则会用后者的value覆盖前者。
+pickle.dump() 函数能一个接着一个地将几个对象转储到同一个文件。随后调用 pickle.load() 来以同样的顺序检索这些对象
 """
 
 
@@ -41,7 +48,7 @@ class SpiderSession(object):
     用于对session进行初始化，并提供cookies的存储与调用功能
     """
     def __init__(self):
-        self._cookies_name = './cookies/'
+        self._cookies_path = './cookies/' + global_config.get('settings', 'project_name') + '.cookies'
         self._accept = global_config.get('connect_config', 'accept')
         self._connection = global_config.get('connect_config', 'connection')
         self._user_agent = get_random_users()
@@ -65,10 +72,39 @@ class SpiderSession(object):
         return self._user_agent
 
     def get_session(self):
+        """
+        获取当前session信息
+        :return:
+        """
         return self.session
 
+    def get_cookies(self):
+        """
+        获取当前cookies
+        :return:
+        """
+        return self.get_session().cookies
+
     def save_cookies_to_local(self):
-        if not os.path.exists(self._cookies_save_path):
-            os.makedirs(self._cookies_save_path)
+        """
+        将当前cookies保存至本地文件
+        :return:
+        """
+        directory = os.path.dirname(self._cookies_path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        with open(self._cookies_path, 'wb') as fp:
+            pickle.dump(self.get_cookies(), fp)
+
+    def load_cookies_from_local(self):
+        """
+        从本地文件读取上一次的cookies
+        :return:
+        """
+        if not os.path.exists(self._cookies_path):
+            return False
+        with open(self._cookies_path, 'rb') as fp:
+            cookies = pickle.load(fp)
+        self.get_session().cookies.update(cookies)
 
 
