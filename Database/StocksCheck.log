@@ -1,0 +1,4 @@
+[2021-11-19 16:13:26] logger.<module> INFO: 测试文档1
+[2021-11-19 16:45:46] logger.<module> INFO: 开始测试xiongdi
+[2021-11-19 16:48:48] main.<module> INFO: 测试语句1
+[2021-11-19 16:48:48] main.<module> WARNING: 测试语句2
