@@ -12,13 +12,12 @@ class StockSpyder(object):
         self.session = self._spider_session.get_session()
 
     def visit_homepage(self):
-        url = 'http://quote.eastmoney.com/newstatic/js/libs/quotemoneyflowchart0715.js'
+        url = 'http://quote.eastmoney.com/newstatic/js/old/quote.js'
         headers = {
+            'User-Agent': get_random_users(),
             'Host': 'quote.eastmoney.com',
-            'Referer': 'http://quote.eastmoney.com/sh601208.html',
-            'User-Agent': get_random_users()
+            'Referer': 'http://quote.eastmoney.com/sh601208.html'
         }
         resp = self.session.get(url=url, headers=headers)
         return resp
-
 
