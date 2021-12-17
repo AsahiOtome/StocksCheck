@@ -19,24 +19,7 @@ logging.basicConfig函数各参数：
         %(message)s:        获取到的字符串信息
     logging.Formatter(fmt='', datefmt='')
 """
-"""
-Python的时间格式：
-    %Y  年份
-    %y  无世纪的年份(00-99)
-    %M  分钟
-    %m  月份
-    %D  等同 %m/%d/%Y
-    %d  每月中的日期(01-31)
-    %B  月份的英文; %b   月份的英文缩写
-    %A  星期的英文; %a   星期的英文缩写
-    %j  一年中的日期(001-365)
-    %R  几点几分(13:24)
-    %r  西式计时(01:54:30 PM)
-    %t  =\t
-    %T  当前时间，等同%H:%M:%S
-    %u  一周中的第几天(1-7, 周一为1)
-    %w  一周中的第几天(0-6, 周一为1)
-"""
+
 # 设置日志格式（全局）
 # logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 # 创建日志对象

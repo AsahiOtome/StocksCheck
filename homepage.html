@@ -685,7 +685,7 @@ function cutstr(str, len, ellipsis) {
                         $("#stock_change_name .rongi").css('display','block');
                         // var html = '<span class=usedName>' + json[json.length-1].sname+'</span> &gt;&gt;&gt;';
                         var html = ''
-                        for(var i=0;i<json.length;i++){
+                        for(var i=0;i<json.length; i++){
                             html+='<span class="usedName">'+json[i].sname+'<span class="hasDate">('+showDate(json[i].changedate)+')</span></span>'
                             if(i != json.length - 1){
                                 html += '&gt;&gt;&gt;'
